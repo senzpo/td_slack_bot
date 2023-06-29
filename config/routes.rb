@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   # get 'help', 'welcome#show'
   # post 'help', 'welcome#show'
 
-  # root "welcome#index"
+  scope module: :web do
+    root 'welcome#index'
+  end
 end
