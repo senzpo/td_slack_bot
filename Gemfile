@@ -12,6 +12,7 @@ gem 'gitlab'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'pg', '~> 1.1'
+gem 'pry'
 gem 'puma', '~> 5.0'
 gem 'redis', '~> 4.0'
 gem 'rubocop', require: false
