@@ -7,7 +7,7 @@ class GitlabHelper
       end
 
       def project
-        @project ||= Gitlab.project(ENV['TAXDOME_GITLAB_PROJECT_ID'])
+        @project ||= Gitlab.project(33352195)
       end
     end
 end
