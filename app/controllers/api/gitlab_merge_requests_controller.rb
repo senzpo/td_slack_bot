@@ -3,8 +3,9 @@
 class Api::GitlabMergeRequestsController < ApplicationController
   def index
     project = GitlabHelper.project
-    merge_requests = GitlabHelper.get_merge_requests.to_json
+    raw_merge_requests = GitlabHelper.get_merge_requests
+    merge_requests = raw_merge_requests.map { |merge_request| { id: merge_request['iid'], title: merge_request['title'], state: merge_request['state'], author: merge_request['author']['name'], reviewers: merge_request['reviewers'].map(&:name) } }
 
-    render json: {merge_requests: merge_requests}
+    render json: {merge_requests: merge_requests.to_json}
   end
 end
