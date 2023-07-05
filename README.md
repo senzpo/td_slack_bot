@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+### Domain Design
+
+Miro https://miro.com/app/board/uXjVM_kIvAw=/
