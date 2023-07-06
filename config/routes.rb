@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # get 'help', 'welcome#show'
-  # post 'help', 'welcome#show'
-
   scope module: :web do
     root 'welcome#index'
+  end
+
+  namespace 'api', api_scope: true, defaults: { format: :json } do
+    resources :gitlab_merge_requests, only: %i[index]
   end
 end
