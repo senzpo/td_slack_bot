@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateGitlabMergeRequests < ActiveRecord::Migration[7.0]
   def change
     create_table :gitlab_merge_requests do |t|

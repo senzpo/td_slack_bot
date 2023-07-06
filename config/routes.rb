@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     root 'welcome#index'
   end
 
-  namespace 'api', api_scope: true, defaults: {format: :json} do
+  namespace 'api', api_scope: true, defaults: { format: :json } do
     resources :gitlab_merge_requests, only: %i[index]
   end
 end
