@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   scope module: :web do
     root 'welcome#index'
+    resources :gitlab_merge_requests, only: %i[index]
   end
 
   namespace 'api', api_scope: true, defaults: { format: :json } do
