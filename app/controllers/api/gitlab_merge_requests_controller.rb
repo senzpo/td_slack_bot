@@ -4,7 +4,7 @@ module Api
   class GitlabMergeRequestsController < ApplicationController
     def index
       merge_requests = Gitlab::MergeRequest.all
-      render json: { merge_requests: merge_requests.to_json }
+      render json: merge_requests.to_json
     end
 
     def refresh
