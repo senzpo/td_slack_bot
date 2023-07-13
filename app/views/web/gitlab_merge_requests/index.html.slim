@@ -1,0 +1,14 @@
+table
+  thead
+    tr
+      th iid
+      th title
+      th state
+      th project_id
+  tbody
+    - @merge_requests.each do |merge_request|
+      tr
+        td = merge_request.iid
+        td = merge_request.title
+        td = merge_request.state
+        td = merge_request.project_id
