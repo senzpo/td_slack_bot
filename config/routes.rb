@@ -12,5 +12,6 @@ Rails.application.routes.draw do
         get :refresh
       end
     end
+    resources :gitbucket_pull_requests, only: %i[index]
   end
 end
