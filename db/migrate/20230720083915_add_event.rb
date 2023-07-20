@@ -8,7 +8,5 @@ class AddEvent < ActiveRecord::Migration[7.0]
       t.string :status, null: false
       t.datetime :created_at, null: false
     end
-
-    add_index :events, [:entity_id, :entity], unique: true
   end
 end
