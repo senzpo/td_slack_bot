@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   scope module: :web do
     root 'welcome#index'
     resources :gitlab_merge_requests, only: %i[index]
+    resources :bitbucket_pull_requests, only: %i[index]
   end
 
   namespace 'api', api_scope: true, defaults: { format: :json } do
@@ -12,6 +13,10 @@ Rails.application.routes.draw do
         get :refresh
       end
     end
-    resources :gitbucket_pull_requests, only: %i[index]
+    resources :bitbucket_pull_requests, only: %i[index] do
+      collection do
+        get :refresh
+      end
+    end
   end
 end
