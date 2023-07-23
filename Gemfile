@@ -19,6 +19,7 @@ gem 'slim'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
+gem 'slack-ruby-client', git: 'https://bitbucket.org/taxesforexpats/slack-ruby-client'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
