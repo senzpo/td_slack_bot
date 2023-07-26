@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class BitbucketLib
+class BitbucketHelper
   @bucket = Tinybucket.new
   @repo = @bucket.repo('taxesforexpats', 'taxdome')
 
   class << self
     def pull_requests
-      @repo.pull_requests.select { |pr| pr.created_on > 3.months.ago }
+      @repo.pull_requests
     end
   end
 end

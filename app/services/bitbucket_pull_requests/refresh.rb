@@ -3,17 +3,18 @@
 module BitbucketPullRequests
   class Refresh
     def self.perform
-      BitbucketLib.pull_requests.each do |pr|
-        next if pr.title =~ /\[WIP\]/ || pr.title !~ /\bTD\b/
+      BitbucketHelper.pull_requests.each do |pr|
+        params = pr.attributes.slice(:title, :state, :created_on, :updated_on)
+        params[:external_id] = pr.id
+        params[:display_name] = pr.author['display_name']
 
-        params = pr.attributes.slice(:id, :title, :state, :created_on, :updated_on)
-        params[:issues] = pr.title.match(/TD-(\d+)/)[1]
-        params[:author] = pr.author['display_name']
-
-        puts params
-
-        pull_request = Bitbucket::PullRequest.find_or_create_by({ id: pr.id })
+        pull_request = Bitbucket::PullRequest.find_or_initialize_by(external_id: pr.id )
         pull_request.update!(params)
+        if pull_request.new_record?
+          pull_request.pull_request_events.create(status: params[:state], produced_at: params[:created_on])
+        elsif pull_request.state != params[:state]
+          pull_request.pull_request_events.create(status: params[:state], produced_at: params[:updated_on])
+        end
       end
     end
   end

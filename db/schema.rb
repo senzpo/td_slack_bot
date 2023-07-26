@@ -14,27 +14,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_083915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  # Custom types defined in this database.
-  # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "status_type", ["gitlab", "bitbucket"]
+  create_table "bitbucket_pull_request_events", force: :cascade do |t|
+    t.bigint "bitbucket_pull_request_id"
+    t.string "status", null: false
+    t.datetime "produced_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bitbucket_pull_request_id"], name: "fk_bitbucket_pull_request"
+  end
 
-  create_table "bitbucket_pull_requests", id: :serial, force: :cascade do |t|
+  create_table "bitbucket_pull_requests", force: :cascade do |t|
+    t.integer "external_id", null: false
     t.string "title", null: false
-    t.integer "issues", null: false
     t.string "state", null: false
-    t.string "author", null: false
+    t.string "display_name", null: false
     t.datetime "created_on", null: false
     t.datetime "updated_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.integer "entity_id", null: false
-    t.enum "entity", null: false, enum_type: "status_type"
-    t.string "status", null: false
-    t.datetime "created_at", null: false
-    t.index ["entity_id", "entity"], name: "index_events_on_entity_id_and_entity", unique: true
+    t.index ["external_id"], name: "index_bitbucket_pull_requests_on_external_id", unique: true
   end
 
   create_table "gitlab_merge_requests", force: :cascade do |t|
@@ -46,4 +44,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_083915) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "bitbucket_pull_request_events", "bitbucket_pull_requests"
 end
