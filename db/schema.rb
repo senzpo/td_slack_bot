@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_083915) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_075313) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,7 +34,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_083915) do
     t.enum "entity", null: false, enum_type: "status_type"
     t.string "status", null: false
     t.datetime "created_at", null: false
-    t.index ["entity_id", "entity"], name: "index_events_on_entity_id_and_entity", unique: true
   end
 
   create_table "gitlab_merge_requests", force: :cascade do |t|
@@ -42,6 +41,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_083915) do
     t.integer "iid", null: false
     t.bigint "project_id", null: false
     t.string "state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "slack_taxdome_members", id: :serial, force: :cascade do |t|
+    t.string "real_name", null: false
+    t.string "email", null: false
+    t.string "role", null: false
+    t.string "team_id", null: false
+    t.boolean "deleted", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
