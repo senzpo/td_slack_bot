@@ -3,7 +3,7 @@
 module Bitbucket
   class PullRequest < ApplicationRecord
     self.table_name = 'bitbucket_pull_requests'
-    validates :external_id, presence: true
+    validates :external_id, presence: true, uniqueness: true
     validates :title, presence: true
     validates :state, presence: true
     validates :display_name, presence: true
