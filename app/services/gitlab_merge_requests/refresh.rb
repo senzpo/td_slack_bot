@@ -7,11 +7,24 @@ class GitlabMergeRequests::Refresh
         iid: rmr['iid'],
         title: rmr['title'],
         project_id: rmr['project_id'],
-        state: rmr['state']
+        state: rmr['state'],
+        created_on: rmr['created_at'],
+        updated_on: rmr['updated_at']
       }
 
       merge_request = Gitlab::MergeRequest.find_or_initialize_by(iid: rmr['iid'])
-      merge_request.update!(params)
+
+      # transaction do
+        if merge_request.new_record?
+          merge_request.gitlab_merge_request_events.create(status: params[:state], produced_at: params[:created_on])
+        elsif merge_request.state != params[:state]
+          merge_request.gitlab_merge_request_events.create(status: params[:state], produced_at: params[:updated_on])
+        end
+
+        merge_request.update!(params)
+      # end
+
+      # TODO: implement some response
     end
   end
 end

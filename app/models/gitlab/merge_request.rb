@@ -7,5 +7,9 @@ module Gitlab
     validates :title, presence: true
     validates :project_id, presence: true
     validates :state, presence: true
+    validates :created_on, presence: true
+    validates :updated_on, presence: true
+
+    has_many :merge_request_events, class_name: 'Gitlab::MergeRequestEvent', foreign_key: 'gitlab_merge_request_id'
   end
 end
