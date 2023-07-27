@@ -28,6 +28,8 @@ default: &default
 development:
   <<: *default
   database: td_slack_bot_development
+  username: ivansidorin
+  password: admin123
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

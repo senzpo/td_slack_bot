@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSlackTaxdomeMembers < ActiveRecord::Migration[7.0]
   def change
     create_table :slack_taxdome_members, id: false do |t|

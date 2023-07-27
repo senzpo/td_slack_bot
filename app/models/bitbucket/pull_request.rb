@@ -16,13 +16,13 @@ module Bitbucket
     private
 
     def set_event
-      Event.create(entity_id: self.id, entity: 'bitbucket', status: self.state, created_at: self.created_on)
+      Event.create(entity_id: id, entity: 'bitbucket', status: state, created_at: created_on)
     end
 
     def check_state_change
-      if saved_change_to_state?
-        Event.create(entity_id: self.id, entity: 'bitbucket', status: self.state, created_at: self.updated_on)
-      end
+      return unless saved_change_to_state?
+
+      Event.create(entity_id: id, entity: 'bitbucket', status: state, created_at: updated_on)
     end
   end
 end
