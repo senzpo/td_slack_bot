@@ -9,12 +9,16 @@ module BitbucketPullRequests
         params[:display_name] = pr.author['display_name']
 
         Bitbucket::PullRequest.transaction do
-          pull_request = Bitbucket::PullRequest.find_or_initialize_by(external_id: pr.id )
+          pull_request = Bitbucket::PullRequest.find_or_initialize_by(external_id: pr.id)
+
+          is_new_record = pull_request.new_record?
+
           pull_request.update!(params)
-          if pull_request.new_record?
-            pull_request.pull_request_events.create(status: params[:state], produced_at: params[:created_on])
+
+          if is_new_record
+            pull_request.pull_request_events.create!(status: params[:state], produced_at: params[:created_on])
           elsif pull_request.state != params[:state]
-            pull_request.pull_request_events.create(status: params[:state], produced_at: params[:updated_on])
+            pull_request.pull_request_events.create!(status: params[:state], produced_at: params[:updated_on])
           end
         end
       end
