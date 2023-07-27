@@ -12,3 +12,6 @@ Metrics/MethodLength:
 
 Metrics/PerceivedComplexity:
   Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
