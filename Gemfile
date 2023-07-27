@@ -18,8 +18,10 @@ gem 'redis', '~> 4.0'
 gem 'slim'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
+gem 'tinybucket'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'dotenv'
 
 # Reduces boot times through caching; required in config/boot.rb
 
