@@ -12,8 +12,13 @@ html
       a.navbar-brand.col-md-3.col-lg-2.me-0.px-3.fs-6.text-white[href="#"]
         | TD
     .container-fluid
-      .row
-        .col-md-3.col-lg-2
-          | sidebar
+      .row.flex
+        .col-md-3.col-lg-2.p-0
+          div.d-flex.flex-column.flex-shrink-0.p-3.bg-body-tertiary.[data-bs-theme="dark"]
+            ul.nav.nav-pills.flex-column.mb-auto
+              li.nav-item
+                a.nav-link[href="#{gitlab_merge_requests_path}"]Gitlab
+                a.nav-link[href="#{bitbucket_pull_requests_path}"]Bitbucket
+                a.nav-link[href="#{taxdome_members_path}"]Taxdome Members
         .col-md-9.col-lg-10
           = yield
