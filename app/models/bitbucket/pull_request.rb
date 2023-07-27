@@ -9,6 +9,6 @@ module Bitbucket
     validates :display_name, presence: true
     validates :created_on, presence: true
 
-    has_many :pull_request_events, class_name: 'Bitbucket::PullRequestEvent', foreign_key: 'bitbucket_pull_request_id'
+    has_many :pull_request_events, dependent: :destroy, class_name: 'Bitbucket::PullRequestEvent', foreign_key: 'bitbucket_pull_request_id'
   end
 end
