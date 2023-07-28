@@ -4,7 +4,7 @@ class GitlabMergeRequests::Refresh
   def self.perform(raw_merge_requests)
     raw_merge_requests.each do |rmr|
       params = {
-        iid: rmr['iid'],
+        external_id: rmr['iid'],
         title: rmr['title'],
         project_id: rmr['project_id'],
         state: rmr['state'],
@@ -12,16 +12,17 @@ class GitlabMergeRequests::Refresh
         updated_on: rmr['updated_at']
       }
 
-      merge_request = Gitlab::MergeRequest.find_or_initialize_by(iid: rmr['iid'])
+      merge_request = Gitlab::MergeRequest.find_or_initialize_by(external_id: rmr['iid'])
+      is_new_record = merge_request.new_record?
 
-      # transaction do
-        if merge_request.new_record?
-          merge_request.gitlab_merge_request_events.create(status: params[:state], produced_at: params[:created_on])
-        elsif merge_request.state != params[:state]
-          merge_request.gitlab_merge_request_events.create(status: params[:state], produced_at: params[:updated_on])
-        end
-
+      # Gitlab::MergeRequest.transaction do
         merge_request.update!(params)
+
+        if is_new_record
+          merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:created_on])
+        elsif merge_request.state != params[:state]
+          merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:updated_on])
+        end
       # end
 
       # TODO: implement some response
