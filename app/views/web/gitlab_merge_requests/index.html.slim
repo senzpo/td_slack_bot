@@ -3,14 +3,18 @@ form type="get" action="/api/gitlab_merge_requests/refresh"
 table
   thead
     tr
-      th iid
+      th external_id
       th title
       th state
       th project_id
+      th created_on
+      th updated_on
   tbody
     - @merge_requests.each do |merge_request|
       tr
-        td = merge_request.iid
+        td = merge_request.external_id
         td = merge_request.title
         td = merge_request.state
         td = merge_request.project_id
+        td = merge_request.created_on
+        td = merge_request.updated_on
