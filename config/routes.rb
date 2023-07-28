@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   scope module: :web do
     root 'welcome#index'
-    resources :gitlab_merge_requests, only: %i[index]
+    resources :gitlab_merge_requests, only: %i[index show]
     resources :gitlab_merge_request_events, only: %i[index]
     resources :bitbucket_pull_requests, only: %i[index]
   end
