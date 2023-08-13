@@ -8,3 +8,9 @@ div
         th Email
         th Role
     tbody
+    - @td_members.each_with_index do |td_member, index|
+        tr
+          td[scope="row"] #{index + 1}
+          td #{td_member.profile.real_name}
+          td #{td_member.profile.email}
+          td #{td_member.profile.title}
