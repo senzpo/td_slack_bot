@@ -14,4 +14,8 @@ Metrics/PerceivedComplexity:
   Enabled: false
 
 Style/ClassAndModuleChildren:
+  Enabled: false
   EnforcedStyle: compact
+  SupportedStyles:
+    - nested
+    - compact
