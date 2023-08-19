@@ -20,5 +20,10 @@ Rails.application.routes.draw do
         get :refresh
       end
     end
+    resources :taxdome_members, only: %i[index] do
+      collection do
+        get :refresh
+      end
+    end
   end
 end
