@@ -10,7 +10,7 @@ module Api
     def refresh
       BitbucketPullRequests::Refresh.perform
 
-      render json: { seccess: true }
+      render json: { success: true }
     end
   end
 end
