@@ -17,11 +17,11 @@ html
             hr
             ul.nav.nav-pills.flex-column.mb-auto
               li.nav-item
-                a.nav-link.active[href="#{gitlab_merge_requests_path}"] Gitlab
+                a[class="nav-link text-white #{'active' if request.original_fullpath == gitlab_merge_requests_path}", href="#{gitlab_merge_requests_path}"] Gitlab
               li
-                a.nav-link.text-white[href="#{bitbucket_pull_requests_path}"] Bitbucket
+                a[class="nav-link text-white #{'active' if request.original_fullpath == bitbucket_pull_requests_path}", href="#{bitbucket_pull_requests_path}"] Bitbucket
               li
-                a.nav-link.text-white[href="#{taxdome_members_path}"] Taxdome Members
+                a[class="nav-link text-white #{'active' if request.original_fullpath == taxdome_members_path}", href="#{taxdome_members_path}"] Taxdome Members
             hr
 
         .col-md-9.col-lg-10
