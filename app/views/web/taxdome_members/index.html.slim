@@ -7,13 +7,19 @@ div
     thead[class="table-dark"]
       tr
         th[scope="col"] #
+        th 
         th Real name
         th Email
         th Role
+        th User deleted
+
     tbody
     - @taxdome_members.each_with_index do |td_member, index|
         tr
           td[scope="row"] #{index + 1}
-          td #{td_member.profile.real_name}
-          td #{td_member.profile.email}
-          td #{td_member.profile.title}
+          td 
+            img[src="#{td_member.avatar_link}" alt="td member avatar image" class="td-member-avatar"]
+          td #{td_member.real_name}
+          td #{td_member.email}
+          td #{td_member.role}
+          td #{td_member.deleted}

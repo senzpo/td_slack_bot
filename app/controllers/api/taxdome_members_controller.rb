@@ -9,7 +9,7 @@ module Api
     end
 
     def refresh
-      BitbucketPullRequests::Refresh.perform
+      SlackTaxdomeMembers::Refresh.perform
       render json: { success: true }
     end
   end
