@@ -3,8 +3,7 @@
 module Api
   class TaxdomeMembersController < ApplicationController
     def index
-      slack_client = Slack::Web::Client.new
-      taxdome_members = slack_client.users_list.members.select { |m| !m.is_bot && !m.deleted && m.real_name != 'Slackbot' }
+      taxdome_members = Slack::TaxdomeMember.all
       render json: taxdome_members.to_json
     end
 
