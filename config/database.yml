@@ -15,6 +15,7 @@
 # gem "pg"
 #
 default: &default
+  host: db
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
@@ -23,6 +24,8 @@ default: &default
 
 development:
   <<: *default
+  username: td_slack_bot
+  password: <%= ENV["TD_SLACK_BOT_DATABASE_PASSWORD"] || 'secret' %>
   database: td_slack_bot_development
 
   # The specified database role being used to connect to postgres.
