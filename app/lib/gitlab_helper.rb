@@ -12,7 +12,7 @@ class GitlabHelper
     end
 
     def project
-      @project ||= Gitlab.project(33_352_195)
+      @project ||= Gitlab.project(ENV['GITLAB_TECH_DESIGN_ID'])
     end
   end
 end
