@@ -4,7 +4,5 @@ class Slack::TaxdomeMember < ApplicationRecord
   validates :external_id, presence: true, uniqueness: true
   validates :deleted, inclusion: [true, false]
   validates :real_name, presence: true
-  validates :role, presence: true
   validates :email, presence: true
-  validates :avatar_link, presence: true
 end

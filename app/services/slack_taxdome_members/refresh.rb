@@ -13,13 +13,9 @@ module SlackTaxdomeMembers
           avatar_link: td_member[:profile][:image_original] || td_member[:profile][:image_192],
         }
 
-        Slack::TaxdomeMember.transaction do
-          taxdome_member = Slack::TaxdomeMember.find_or_initialize_by(external_id: td_member[:id])
-          taxdome_member.update!(params)
-        end
+        taxdome_member = Slack::TaxdomeMember.find_or_initialize_by(external_id: td_member[:id])
+        taxdome_member.update!(params)
       end
     end
   end
 end
-
-
