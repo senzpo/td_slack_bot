@@ -1,10 +1,14 @@
-# K8s manifests for localhost usage
+# Local K8s setup based on Minikube
 
-## Setup minikube
+## Minikube
 
-[Install minikube](https://minikube.sigs.k8s.io/docs/start/)
+Minikube allows to create K8s cluster for dev usage on localhost
 
-### Enable some addons
+### Installation && setup
+
+[Installation guide](https://minikube.sigs.k8s.io/docs/start/)
+
+### Some recommended addons
 
 ```
 minikube addons enable dashboard
@@ -13,42 +17,47 @@ minikube addons enable ingress-dns
 minikube addons enable registry
 ```
 
-### Build image for minikube registry
+### Start a K8s cluster
+
+```minikube start```
+
+### Prepare an app image for minikube
+
+#### Build from the scratch
 
 ```minikube image build . -t td_slack_bot```
 
-#### or load from the host registry
+#### or copy a prepared one
 
 ```minikube image load <image name>```
 
-## Create local setup
+## Deployment
 
-kubectl apply -k minikube
-or separately
+Apply all of necessary manifests together with [kustomization.yaml](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
 
-### Create namespace:
+```kubectl apply -k minikube```
 
-```kubectl apply -f minikube/namespace.yaml```
+or one by one
 
-### Create deployment:
+```
+kubectl apply -f minikube/postgres-config.yaml
+kubectl apply -f minikube/app.yaml
+...
+```
 
- ```kubectl apply -f minikube/app.yaml```
+The result will be on the **td-slack-bot** namespace:
 
-### Create app service:
+```kubectl get all -n td-slack-bot```
 
-```kubectl apply -f minikube/app-service.yaml```
+Access to service:
 
-access to service
-minikube service td-slack-bot-service -n td-slack-bot
+```minikube service td-slack-bot-service -n td-slack-bot```
 
-## Delete local setup
+## CleanUp
 
 ### Delete deployment:
 
-```kubectl delete -f minikube/app.yaml```
-
-### Delete namespace:
-```kubectl delete -f minikube/namespace.yaml```
+```kubectl delete -k minikube```
 
 ## Delete the whole cluster
 
