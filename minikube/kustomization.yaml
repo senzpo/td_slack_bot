@@ -1,0 +1,5 @@
+resources:
+  - namespace.yaml
+  - app.yaml
+  - app-service.yaml
+namespace: td-slack-bot
