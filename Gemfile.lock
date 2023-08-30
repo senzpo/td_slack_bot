@@ -1,3 +1,14 @@
+GIT
+  remote: https://bitbucket.org/taxesforexpats/slack-ruby-client
+  revision: 1b2147830c99545197d718dffd73e946a672e5d8
+  specs:
+    slack-ruby-client (0.16.1)
+      faraday (>= 0.9)
+      faraday_middleware
+      gli
+      hashie
+      websocket-driver
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -98,8 +109,10 @@ GEM
     gitlab (4.19.0)
       httparty (~> 0.20)
       terminal-table (>= 1.5.1)
+    gli (2.21.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    hashie (5.0.0)
     httparty (0.21.0)
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -292,6 +305,7 @@ DEPENDENCIES
   redis (~> 4.0)
   rspec-rails (~> 6.0.0)
   rubocop
+  slack-ruby-client!
   slim
   sprockets-rails
   stimulus-rails

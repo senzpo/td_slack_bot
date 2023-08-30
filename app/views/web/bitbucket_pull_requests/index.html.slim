@@ -5,7 +5,6 @@ table
     tr
       th id
       th title
-      th issues
       th state
       th author
       th created_on
@@ -15,8 +14,7 @@ table
       tr
         td = pull_requests.id
         td = pull_requests.title
-        td = pull_requests.issues
         td = pull_requests.state
-        td = pull_requests.author
+        td = pull_requests.display_name
         td = pull_requests.created_on
         td = pull_requests.updated_on
