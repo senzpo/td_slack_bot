@@ -6,4 +6,5 @@ resources:
   - namespace.yaml
   - app.yaml
   - app-service.yaml
+  - ingress.yaml
 namespace: td-slack-bot

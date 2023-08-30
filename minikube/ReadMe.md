@@ -21,6 +21,10 @@ minikube addons enable registry
 
 ```minikube start```
 
+Dashboard web page:
+
+```minikube dashboard```
+
 ### Prepare an app image for minikube
 
 #### Build from the scratch
@@ -52,6 +56,10 @@ The result will be on the **td-slack-bot** namespace:
 Access to service:
 
 ```minikube service td-slack-bot-service -n td-slack-bot```
+
+Run tunnel to makes ingress available on localhost
+
+```minikube tunnel```
 
 ## CleanUp
 
