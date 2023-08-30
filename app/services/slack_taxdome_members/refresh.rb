@@ -6,7 +6,7 @@ module SlackTaxdomeMembers
       SlackHelper.taxdome_members.each do |td_member|
         params = {
           external_id: td_member[:id],
-          deleted: td_member[:deleted],
+          is_deleted: td_member[:deleted],
           real_name: td_member[:profile][:real_name],
           role: td_member[:profile][:title],
           email: td_member[:profile][:email],

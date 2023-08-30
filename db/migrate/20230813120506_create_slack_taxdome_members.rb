@@ -7,7 +7,7 @@ class CreateSlackTaxdomeMembers < ActiveRecord::Migration[7.0]
       t.string :email, null: false
       t.string :role
       t.string :avatar_link
-      t.boolean :deleted, null: false
+      t.boolean :is_deleted, null: false
 
       t.timestamps
     end
