@@ -22,6 +22,9 @@ gem 'tinybucket'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'dotenv'
+gem 'google_sign_in'
+gem 'bcrypt'
+gem 'rack-cors'
 
 # Reduces boot times through caching; required in config/boot.rb
 
