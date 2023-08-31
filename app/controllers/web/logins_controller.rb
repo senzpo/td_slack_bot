@@ -4,9 +4,8 @@ module Web
     def index; end
 
     def create
-      if user_id = authenticate_with_google
-        hashed_user_id = BCrypt::Password.create(user_id)
-        session[:hashed_user_id] = hashed_user_id
+      user_id = authenticate_with_google
+      if user_id
         session[:user_id] = user_id
         redirect_to root_path
       else
@@ -16,9 +15,11 @@ module Web
 
     private
     def authenticate_with_google
-      if id_token = flash[:google_sign_in]['id_token']
+      id_token = flash[:google_sign_in]['id_token']
+      error = flash[:google_sign_in]['error']
+      if id_token
         GoogleSignIn::Identity.new(id_token).user_id
-      elsif error = flash[:google_sign_in]['error']
+      elsif error
         logger.error "Google authentication error: #{error}"
         nil
       end
