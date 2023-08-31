@@ -3,8 +3,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
-  # For all responses in this controller, return the CORS access control headers.
-
   private
 
   def authenticate_user!
