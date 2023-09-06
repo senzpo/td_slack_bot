@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: 'td_slack_bot_development'
+  POSTGRES_USER: 'td_slack_bot'
+  POSTGRES_PASSWORD: 'secret'

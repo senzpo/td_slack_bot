@@ -1,0 +1,10 @@
+resources:
+  - postgres-config.yaml
+  - postgres-pvc-pv.yaml
+  - postgres-deployment.yaml
+  - postgres-service.yaml
+  - namespace.yaml
+  - app.yaml
+  - app-service.yaml
+  - ingress.yaml
+namespace: td-slack-bot
