@@ -6,6 +6,8 @@ RUN gem install bundler rubygems-bundler
 RUN mkdir -p /app
 WORKDIR /app
 
+ARG RAILS_ENV=production
+
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install

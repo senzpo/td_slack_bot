@@ -1,0 +1,62 @@
+variables:
+  IMAGE_TAG: "$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID"
+  BUILD_TAG_ID: "$DOCKER_REGISTRY_STAGE/$CI_PROJECT_PATH:$IMAGE_TAG"
+  BASE_TAG_ID: "$DOCKER_REGISTRY_STAGE/$CI_PROJECT_PATH:base"
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_VERIFY: 1
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+
+stages:
+  - build
+  - deploy
+
+services:
+  - docker:24.0.1-dind
+
+.docker_login: &docker_login
+  before_script:
+    - until docker info; do sleep 1; done
+    - echo -n $DOCKER_CREDS | docker login $DOCKER_REGISTRY_STAGE --username AWS --password-stdin
+
+get_ecr_creds:
+  stage: build
+  image: amazon/aws-cli:2.12.6
+  script:
+    -  echo "DOCKER_CREDS=$(aws ecr get-login-password --region $AWS_REGION)"  >> build.env
+  artifacts:
+    reports:
+      dotenv: build.env
+    expire_in: 1 hour
+  tags:
+    - eks-us-stage-1
+  only:
+    - main
+
+build:
+  stage: build
+  image: docker:24.0.1
+  <<: *docker_login
+  script:
+    - docker build -t $BUILD_TAG_ID .
+    - docker push $BUILD_TAG_ID
+    - docker rmi -f $BUILD_TAG_ID
+    - echo "y" | docker system prune
+  needs:
+    - job: get_ecr_creds
+      artifacts: true
+  tags:
+    - eks-us-stage-1
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  image: $DOCKER_REGISTRY_STAGE/taxdome/service/infra/deploy_aws:v0.0.3
+  script:
+    - echo "$PROD_ENV" | tr -d '\r'  > ./values.yml
+    - helm upgrade -n td-slack-bot -i td-slack-bot -f values.yml --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
+  tags:
+    - eks-us-stage-1
+  only:
+    - master
