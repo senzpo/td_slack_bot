@@ -36,7 +36,8 @@ get_ecr_creds:
 build:
   stage: build
   image: docker:24.0.1
-  <<: *docker_login
+  before_script:
+    - docker_login
   script:
     - docker build -t $BUILD_TAG_ID .
     - docker push $BUILD_TAG_ID
@@ -60,3 +61,9 @@ deploy:
     - eks-us-stage-1
   only:
     - main
+
+.functions: &functions |
+    function docker_login() {
+      until docker info; do sleep 1; done
+        echo -n $DOCKER_CREDS | docker login $DOCKER_REPO --username AWS --password-stdin 
+    }
