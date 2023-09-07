@@ -5,4 +5,8 @@ class Slack::TaxdomeMember < ApplicationRecord
   validates :is_deleted, inclusion: [true, false]
   validates :real_name, presence: true
   validates :email, presence: true
+
+  scope :by_display_name, -> (display_name){ where("real_name ILIKE (?)", display_name) }
+
+  has_many :pull_requests, class_name: 'Bitbucket::PullRequest', foreign_key: 'slack_taxdome_member_id'
 end

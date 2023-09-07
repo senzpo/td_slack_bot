@@ -8,6 +8,11 @@ module BitbucketPullRequests
         params[:external_id] = pr.id
         params[:display_name] = pr.author['display_name']
 
+        slack_taxdome_member = Slack::TaxdomeMember.by_display_name(pr.author['display_name']).first
+        if slack_taxdome_member.present?
+          params[:slack_taxdome_member_id] = slack_taxdome_member.id
+        end
+
         Bitbucket::PullRequest.transaction do
           pull_request = Bitbucket::PullRequest.find_or_initialize_by(external_id: pr.id)
 
