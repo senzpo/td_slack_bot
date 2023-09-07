@@ -1,12 +1,12 @@
 form type="get" action="/api/gitlab_merge_requests/refresh"
   button type="submit" Refresh
+  a.button-link href="/gitlab_merge_request_events" Events
 table
   thead
     tr
       th external_id
       th title
       th state
-      th project_id
       th created_on
       th updated_on
   tbody
@@ -15,6 +15,5 @@ table
         td = merge_request.external_id
         td = merge_request.title
         td = merge_request.state
-        td = merge_request.project_id
         td = merge_request.created_on
         td = merge_request.updated_on
