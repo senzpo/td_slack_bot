@@ -11,5 +11,7 @@ module Gitlab
     validates :updated_on, presence: true
 
     has_many :merge_request_events, dependent: :destroy, class_name: 'Gitlab::MergeRequestEvent', foreign_key: 'gitlab_merge_request_id'
+
+    scope :ordered_by_newest, -> { order(created_on: :desc) }
   end
 end

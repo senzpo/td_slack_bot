@@ -3,7 +3,7 @@
 module Web
   class GitlabMergeRequestEventsController < ApplicationController
     def index
-      @merge_request_events = Gitlab::MergeRequestEvent.all.order(gitlab_merge_request_id: :desc)
+      @merge_request_events = Gitlab::MergeRequestEvent.ordered_by_newest
     end
   end
 end

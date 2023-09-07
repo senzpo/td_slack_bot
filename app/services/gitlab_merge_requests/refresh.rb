@@ -22,8 +22,7 @@ class GitlabMergeRequests::Refresh
         if is_new_record
           merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:created_on])
         elsif state_before_update != params[:state]
-          new_event = merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:updated_on])
-          merge_request.merge_request_events << new_event
+          merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:updated_on])
         end
       end
 
