@@ -6,6 +6,7 @@ module Gitlab
     validates :external_id, presence: true, uniqueness: true
     validates :title, presence: true
     validates :project_id, presence: true
+    validates :author, presence: true
     validates :state, presence: true
     validates :created_on, presence: true
     validates :updated_on, presence: true

@@ -7,6 +7,7 @@ class GitlabMergeRequests::Refresh
         external_id: rmr['iid'],
         title: rmr['title'],
         project_id: rmr['project_id'],
+        author: rmr['author']['name'],
         state: rmr['state'],
         created_on: rmr['created_at'],
         updated_on: rmr['updated_at']
