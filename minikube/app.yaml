@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: td-slack-bot
+  namespace: td-slack-bot
+  labels:
+    app: td-slack-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: td-slack-bot
+  template:
+    metadata:
+      labels:
+        app: td-slack-bot
+    spec:
+      containers:
+        - name: td-slack-bot
+          image: td-slack-bot
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: RAILS_MASTER_KEY
+              value: 844eee6881f9646e298314baffa4005c

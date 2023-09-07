@@ -1,0 +1,12 @@
+table
+  thead
+    tr
+      th gitlab_merge_request_id
+      th status
+      th produced_at
+  tbody
+    - @merge_request_events.each do |merge_request_event|
+      tr
+        td = merge_request_event.gitlab_merge_request_id
+        td = merge_request_event.status
+        td = merge_request_event.produced_at

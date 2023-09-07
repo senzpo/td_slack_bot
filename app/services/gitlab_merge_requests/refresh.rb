@@ -29,13 +29,14 @@ class GitlabMergeRequests::Refresh
 
       merge_request = Gitlab::MergeRequest.find_or_initialize_by(external_id: rmr['iid'])
       is_new_record = merge_request.new_record?
+      state_before_update = merge_request.state
 
       Gitlab::MergeRequest.transaction do
         merge_request.update!(params)
 
         if is_new_record
           merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:created_on])
-        elsif merge_request.state != params[:state]
+        elsif state_before_update != params[:state]
           merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:updated_on])
         end
       end
