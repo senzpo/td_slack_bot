@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-{{ .Values.serviceName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: app-{{ .Values.serviceName }}
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+      app: app-{{ .Values.serviceName }}
+  template:
+    metadata:
+      labels:
+        app: app-{{ .Values.serviceName }}
+    spec:
+      imagePullSecrets:
+        - name: app-{{ .Values.serviceName }}-imagepull-credentional
+      containers:
+        - name: app-{{ .Values.serviceName }}
+          image: {{ .Values.app.imagePath }}:{{ .Values.serviceVersion }}
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+          env:
+          - name: CHECKSUM_CONFIG
+            value: {{ (print $.Values.app.config) | sha256sum }}
+          - name: CHECKSUM_SECRET
+            value: {{ (print $.Values.app.secret) | sha256sum }}
+          envFrom:
+          - configMapRef:
+              name: app-{{ .Values.serviceName }}
+          - secretRef:
+              name: app-{{ .Values.serviceName }}
+          ports:
+            - containerPort: 3000
+              protocol: TCP

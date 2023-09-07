@@ -20,6 +20,7 @@ gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'tinybucket'
 gem 'turbo-rails'
+gem 'slack-ruby-client', git: 'https://bitbucket.org/taxesforexpats/slack-ruby-client'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'dotenv'
 

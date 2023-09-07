@@ -1,2 +1,12 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
+.td-member-avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+td {
+  vertical-align: middle;
+}

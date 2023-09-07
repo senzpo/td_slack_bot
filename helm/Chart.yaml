@@ -1,0 +1,6 @@
+name: td_slack_bot
+version: 0.0.1
+description: Deploy for TD slack bot.
+sources:
+  - git@gitlab.taxdome.dev:taxdome/service/td_slack_bot.git
+
