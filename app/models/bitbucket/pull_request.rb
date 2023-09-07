@@ -10,5 +10,7 @@ module Bitbucket
     validates :created_on, presence: true
 
     has_many :pull_request_events, dependent: :destroy, class_name: 'Bitbucket::PullRequestEvent', foreign_key: 'bitbucket_pull_request_id'
+
+    belongs_to :taxdome_member, class_name: 'Slack::TaxdomeMember', foreign_key: 'slack_taxdome_member_id'
   end
 end
