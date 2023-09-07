@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class GitlabMergeRequests::Refresh
+  class TaxdomeMemberDoesNotExist < StandardError; end;
   def self.perform(raw_merge_requests)
+    errors = []
     raw_merge_requests.each do |rmr|
       params = {
         external_id: rmr['iid'],
@@ -15,6 +17,12 @@ class GitlabMergeRequests::Refresh
 
 
       slack_taxdome_member = Slack::TaxdomeMember.by_display_name(params[:author]).first
+
+      if slack_taxdome_member.blank? 
+        errors << "Slack member #{params[:author]} does not exist"
+        next
+      end
+
       if slack_taxdome_member.present?
         params[:slack_taxdome_member_id] = slack_taxdome_member.id
       end
@@ -33,6 +41,9 @@ class GitlabMergeRequests::Refresh
       end
 
       # TODO: implement some response
+    end
+    if errors.any?
+      raise TaxdomeMemberDoesNotExist, errors
     end
   end
 end
