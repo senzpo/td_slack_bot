@@ -13,6 +13,12 @@ class GitlabMergeRequests::Refresh
         updated_on: rmr['updated_at']
       }
 
+
+      slack_taxdome_member = Slack::TaxdomeMember.by_display_name(params[:author]).first
+      if slack_taxdome_member.present?
+        params[:slack_taxdome_member_id] = slack_taxdome_member.id
+      end
+
       merge_request = Gitlab::MergeRequest.find_or_initialize_by(external_id: rmr['iid'])
       is_new_record = merge_request.new_record?
 

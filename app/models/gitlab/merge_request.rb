@@ -12,5 +12,7 @@ module Gitlab
     validates :updated_on, presence: true
 
     has_many :merge_request_events, dependent: :destroy, class_name: 'Gitlab::MergeRequestEvent', foreign_key: 'gitlab_merge_request_id'
+
+    belongs_to :taxdome_member, class_name: 'Slack::TaxdomeMember', foreign_key: 'slack_taxdome_member_id'
   end
 end
