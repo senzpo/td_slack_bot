@@ -58,8 +58,8 @@ deploy:
   stage: deploy
   image: $DOCKER_REGISTRY_STAGE/taxdome/service/infra/deploy_aws:v0.0.3
   script:
-    - echo "$PROD_ENV" | tr -d '\r'  > ./values.yml
-    - helm upgrade -n td-slack-bot -i td-slack-bot -f values.yml --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
+    - helm dependency update
+    - helm upgrade -n td-slack-bot -i td-slack-bot -f ${STAGE_ENV} --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
   tags:
     - eks-us-stage-1
   only:
