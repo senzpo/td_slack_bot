@@ -59,7 +59,7 @@ deploy:
   image: $DOCKER_REGISTRY_STAGE/taxdome/service/infra/deploy_aws:v0.0.3
   script:
     - helm dependency update helm
-    - helm upgrade -n td-slack-bot td-slack-bot -f ${STAGE_ENV} --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
+    - helm upgrade --install -n td-slack-bot td-slack-bot -f ${STAGE_ENV} --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
   tags:
     - eks-us-stage-1
   only:
