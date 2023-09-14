@@ -75,7 +75,7 @@ postgresql:
       auth:
         username: "slackbot"
         database: "slackbotdb"
-        existingSecret: "{{ .Values.clusterName }}-td-slack-bot"
+        existingSecret: "eks-us-stage-1-td-slack-bot"
         secretKeys:
           adminPasswordKey: "adminPassword"
           userPasswordKey: "userPassword"
