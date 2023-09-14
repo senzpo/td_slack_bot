@@ -1,5 +1,17 @@
 AllCops:
   NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
+    - 'public/**/*'
+    - 'storage/**/*'
+    - 'vendor/**/*'
+
+require:
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-performance
 
 Style/Documentation:
   Enabled: false
@@ -10,5 +22,23 @@ Metrics/CyclomaticComplexity:
 Metrics/MethodLength:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
   Enabled: false

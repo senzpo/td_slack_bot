@@ -59,4 +59,4 @@ deploy:
   tags:
     - eks-us-stage-1
   only:
-    - master
+    - main

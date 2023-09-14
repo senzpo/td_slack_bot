@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module BitbucketPullRequests
-  class TaxdomeMemberDoesNotExist < StandardError; end;
+  class TaxdomeMemberDoesNotExist < StandardError; end
+
   class Refresh
     def self.perform
       errors = []
@@ -12,14 +13,12 @@ module BitbucketPullRequests
 
         slack_taxdome_member = Slack::TaxdomeMember.by_display_name(params[:display_name]).first
 
-        if slack_taxdome_member.blank? 
+        if slack_taxdome_member.blank?
           errors << "Slack member #{params[:display_name]} does not exist"
           next
         end
 
-        if slack_taxdome_member.present?
-          params[:slack_taxdome_member_id] = slack_taxdome_member.id
-        end
+        params[:slack_taxdome_member_id] = slack_taxdome_member.id if slack_taxdome_member.present?
 
         Bitbucket::PullRequest.transaction do
           pull_request = Bitbucket::PullRequest.find_or_initialize_by(external_id: pr.id)
@@ -36,9 +35,9 @@ module BitbucketPullRequests
         end
       end
 
-      if errors.any?
-        raise TaxdomeMemberDoesNotExist, errors
-      end
+      return unless errors.any?
+
+      raise TaxdomeMemberDoesNotExist, errors
     end
   end
 end
