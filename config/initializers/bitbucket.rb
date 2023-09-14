@@ -2,6 +2,6 @@
 
 # https://github.com/hirakiuc/tinybucket
 Tinybucket.configure do |config|
-  config.oauth_token = ENV['BITBUCKET_OAUTH_TOKEN']
-  config.oauth_secret = ENV['BITBUCKET_OAUTH_SECRET']
+  config.oauth_token = ENV.fetch('BITBUCKET_OAUTH_TOKEN', nil)
+  config.oauth_secret = ENV.fetch('BITBUCKET_OAUTH_SECRET', nil)
 end

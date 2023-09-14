@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :gitlab_merge_requests, only: %i[index show]
     resources :gitlab_merge_request_events, only: %i[index]
     resources :bitbucket_pull_requests, only: %i[index]
-    resources :taxdome_members, only: %i[index]
+    resources :taxdome_members, only: %i[index edit update]
   end
 
   namespace 'api', api_scope: true, defaults: { format: :json } do

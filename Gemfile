@@ -9,20 +9,20 @@ gem 'rails', '~> 7.0.5'
 
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.3.0.alpha3'
+gem 'dotenv'
 gem 'gitlab'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'redis', '~> 4.0'
+gem 'slack-ruby-client', git: 'https://bitbucket.org/taxesforexpats/slack-ruby-client'
 gem 'slim'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'tinybucket'
 gem 'turbo-rails'
-gem 'slack-ruby-client', git: 'https://bitbucket.org/taxesforexpats/slack-ruby-client'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'dotenv'
 
 # Reduces boot times through caching; required in config/boot.rb
 
