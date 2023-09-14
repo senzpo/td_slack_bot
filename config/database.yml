@@ -22,17 +22,21 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['DATABASE_HOST'] || 'db' %>
+  port: <%= ENV['DATABASE_PORT'] || 5432 %>
+  pool: <%= ENV['DATABASE_POOL'] || 5 %>
+  username: <%= ENV['DATABASE_USERNAME'] || 'admin' %>
+  password: <%= ENV['DATABASE_PASSWORD'] || 'secret' %>
+  database: <%= ENV['DATABASE_NAME'] || 'td_slack_bot_development' %>
+  timeout: 5000
+
+
 development:
   <<: *default
-#  username: td_slack_bot
-#  password: <%#= ENV["TD_SLACK_BOT_DATABASE_PASSWORD"] || 'secret' %>
   database: td_slack_bot_development
-  host: localhost
-  port: <%= ENV.fetch("DATABASE_PORT") { 5432 } %>
-  pool: <%= ENV.fetch("DATABASE_POOL") { 5 } %>
-  username: <%= ENV.fetch("DATABASE_USERNAME") { 'admin' } %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") { 'secret' } %>
-
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -67,10 +71,6 @@ development:
 test:
   <<: *default
   database: td_slack_bot_test
-  host: localhost
-  username: <%= ENV.fetch("DATABASE_USERNAME") { 'admin' } %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") { 'secret' } %>
-
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
