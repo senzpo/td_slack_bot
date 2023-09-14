@@ -60,7 +60,8 @@ deploy:
   script:
     - helm dependency update
     - helm upgrade -n td-slack-bot -i td-slack-bot -f ${STAGE_ENV} --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
-  tags:
+    when: manual
+    tags:
     - eks-us-stage-1
   only:
     - main

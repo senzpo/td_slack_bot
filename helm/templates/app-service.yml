@@ -12,7 +12,7 @@ metadata:
     release: {{ $.Release.Name }}
 spec:
   selector:
-    app: app-{{ .Values.app.serviceName }}
+    app: app-{{ .Values.serviceName }}
   type: {{ .Values.app.service.type }}
   ports: 
   {{- toYaml .Values.app.service.ports| nindent 8 }}
