@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Web::TaxdomeMembersController', type: :request do
+RSpec.describe 'Web::TaxdomeMembersController' do
   let(:taxdome_member) do
     Slack::TaxdomeMember.create!(external_id: 'external_id', real_name: 'real_name', email: 'some@example.com', role:,
                                  is_deleted: false)
