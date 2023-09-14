@@ -61,7 +61,7 @@ deploy:
     - helm dependency update helm
     - helm upgrade --install -n td-slack-bot td-slack-bot -f ${STAGE_ENV} --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
   when: manual
-    tags:
+  tags:
     - eks-us-stage-1
   only:
     - main
