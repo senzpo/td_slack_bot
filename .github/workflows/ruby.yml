@@ -24,6 +24,22 @@ jobs:
       matrix:
         ruby-version: ['3.1.2']
 
+    services:
+      postgres:
+        image: postgres:15.4
+        env:
+          POSTGRES_DB: td_slack_bot_test
+          POSTGRES_PASSWORD: admin
+          POSTGRES_USER: secret
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
