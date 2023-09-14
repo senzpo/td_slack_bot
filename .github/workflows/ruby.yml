@@ -29,8 +29,8 @@ jobs:
         image: postgres:15.4
         env:
           POSTGRES_DB: td_slack_bot_test
-          POSTGRES_PASSWORD: admin
-          POSTGRES_USER: secret
+          POSTGRES_PASSWORD: secret
+          POSTGRES_USER: admin
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started
