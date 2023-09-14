@@ -50,6 +50,8 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run migrations for tests
+      run: APP_ENV=test DATABASE_HOST=localhost DATABASE_USERNAME=admin DATABASE_PASSWORD=secret rails db:migrate
     - name: Run tests
       run: APP_ENV=test DATABASE_HOST=localhost DATABASE_USERNAME=admin DATABASE_PASSWORD=secret bundle exec rspec
     - name: Run linters
