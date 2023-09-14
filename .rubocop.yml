@@ -1,5 +1,11 @@
 AllCops:
   NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
+    - 'public/**/*'
+    - 'storage/**/*'
 
 Style/Documentation:
   Enabled: false
