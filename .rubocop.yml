@@ -6,6 +6,7 @@ AllCops:
     - 'tmp/**/*'
     - 'public/**/*'
     - 'storage/**/*'
+    - 'vendor/**/*'
 
 require:
   - rubocop-rspec
