@@ -1,14 +1,3 @@
-GIT
-  remote: https://bitbucket.org/taxesforexpats/slack-ruby-client
-  revision: 1b2147830c99545197d718dffd73e946a672e5d8
-  specs:
-    slack-ruby-client (0.16.1)
-      faraday (>= 0.9)
-      faraday_middleware
-      gli
-      hashie
-      websocket-driver
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -261,6 +250,13 @@ GEM
       sprockets-rails
       tilt
     simple_oauth (0.3.1)
+    slack-ruby-client (0.14.6)
+      activesupport
+      faraday (>= 0.9)
+      faraday_middleware
+      gli
+      hashie
+      websocket-driver
     slim (5.1.1)
       temple (~> 0.10.0)
       tilt (>= 2.1.0)
@@ -298,7 +294,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    websocket-driver (0.7.5)
+    websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     zeitwerk (2.6.8)
@@ -326,7 +322,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  slack-ruby-client!
+  slack-ruby-client
   slim
   sprockets-rails
   stimulus-rails
