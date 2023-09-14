@@ -21,11 +21,11 @@ app:
             targetPort: 9394
     resources:
         requests:
-        cpu: 50m
-        memory: 256Mi
+          cpu: 50m
+          memory: 256Mi
         limits:
-        cpu: 1
-        memory: 1Gi
+          cpu: 1
+          memory: 1Gi
     ports:
       - containerPort: 3000
         protocol: TCP
