@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: {{ .Values.ingress.class }}
   rules:
-  {{- range $val, $val := .Values.ingress.hosts }}
+  {{- range $key, $val := .Values.ingress.hosts }}
     - host: {{$val | quote}}
       http:
         paths:
@@ -25,7 +25,7 @@ spec:
                   number: 80
   {{ end }}
   tls:
-  {{- range $val, $val := .Values.ingress.hosts }}
+  {{- range $key, $val := .Values.ingress.hosts }}
   - hosts:
     - {{$val | quote}}
     secretName: ssl-{{$val | replace "*" "wildcard"}}
