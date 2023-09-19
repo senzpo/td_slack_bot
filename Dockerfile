@@ -14,7 +14,7 @@ RUN bundle install
 
 ADD . /app
 
-RUN bundle exec rake assets:precompile
+RUN SECRET_KEY_BASE='SECRET_KEY_BASE' bundle exec rake assets:precompile
 
 EXPOSE 3000
 
