@@ -20,7 +20,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: nginx
+                name: app-{{ .Values.serviceName }}
                 port:
                   number: 80
   {{ end }}
