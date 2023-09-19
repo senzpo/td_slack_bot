@@ -33,7 +33,7 @@ app:
         protocol: TCP
     probes:
         httpGet:
-            path: /api/ping
+            path: /
             port: 3000
             scheme: HTTP
     config:
