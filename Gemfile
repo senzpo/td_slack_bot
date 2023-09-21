@@ -11,6 +11,7 @@ gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.3.0.alpha3'
 gem 'dotenv'
 gem 'gitlab'
+gem 'google_sign_in'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'pg', '~> 1.1'

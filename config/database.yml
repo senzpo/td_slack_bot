@@ -25,7 +25,6 @@ default: &default
   database: <%= ENV['DATABASE_NAME'] || 'td_slack_bot_development' %>
   timeout: 5000
 
-
 development:
   <<: *default
   database: td_slack_bot_development

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resources :gitlab_merge_request_events, only: %i[index]
     resources :bitbucket_pull_requests, only: %i[index]
     resources :taxdome_members, only: %i[index edit update]
+    get 'logins', to: 'logins#index'
+    get 'logins/create', to: 'logins#create', as: :create_login
   end
 
   namespace 'api', api_scope: true, defaults: { format: :json } do
