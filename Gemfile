@@ -9,6 +9,7 @@ gem 'rails', '~> 7.0.5'
 
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.3.0.alpha3'
+gem 'business', '~> 2.0'
 gem 'dotenv'
 gem 'gitlab'
 gem 'importmap-rails'

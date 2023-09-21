@@ -8,7 +8,7 @@ module Api
     end
 
     def refresh
-      SlackTaxdomeMembers::Refresh.perform
+      Slack::TaxdomeMembers::Refresh.perform
       render json: { success: true }
     end
   end
