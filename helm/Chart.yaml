@@ -1,0 +1,17 @@
+name: tdslackbot
+version: 0.0.1
+description: Deploy for TD slack bot.
+sources:
+  - git@gitlab.taxdome.dev:taxdome/service/td_slack_bot.git
+
+
+
+dependencies:
+- name: postgresql
+  version: "11.9.13"
+  repository: "https://charts.bitnami.com/bitnami"
+  condition: postgresql.enabled
+- name: redis
+  version: "18.0.2"
+  repository: "https://charts.bitnami.com/bitnami"
+  condition: redis.enabled

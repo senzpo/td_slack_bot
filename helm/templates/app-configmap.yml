@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-{{ .Values.serviceName }}
+  namespace: {{ $.Release.Namespace }}
+data:
+{{- range $key, $val := .Values.app.config }}
+  {{ $key }}: "{{ $val }}"
+{{ end }}

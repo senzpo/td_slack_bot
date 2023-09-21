@@ -7,5 +7,7 @@ module Gitlab
     validates :produced_at, presence: true
 
     belongs_to :merge_request, class_name: 'Gitlab::MergeRequest', foreign_key: 'gitlab_merge_request_id'
+
+    scope :ordered_by_newest, -> { order(produced_at: :desc) }
   end
 end

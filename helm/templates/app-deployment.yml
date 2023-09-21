@@ -1,0 +1,66 @@
+---
+apiVersion: {{ template "deployment.apiVersion" $ }}
+kind: Deployment
+metadata:
+  name: app-{{ .Values.serviceName }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: app-{{ .Values.serviceName }}
+spec:
+{{- if and (not  .Values.app.horizontalPodAutoscaler)  (not  .Values.app.externalHorizontalPodAutoscaler) }}
+  replicas: {{ .Values.app.deployment.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      app: app-{{ .Values.serviceName }}
+  {{- if .Values.common.updateStrategy }}
+  strategy:
+    {{- toYaml .Values.common.updateStrategy | nindent 4 }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        app: app-{{ .Values.serviceName }}
+        logging: "true"
+      {{- if .Values.app.deployment.podAnnotations }}
+      annotations:
+          {{- with .Values.app.deployment.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+      {{- end }}
+    spec:
+      imagePullSecrets:
+        - name: app-{{ .Values.serviceName }}-imagepull-credentials
+      containers:
+        - name: app-{{ .Values.serviceName }}
+          image: "{{ .Values.app.imagePath }}:{{ .Values.serviceVersion }}"
+          resources:
+            {{- toYaml .Values.app.resources | nindent 12 }}
+          env:
+          - name: CHECKSUM_CONFIG
+            value: {{ (print $.Values.app.config) | sha256sum }}
+          - name: CHECKSUM_SECRET
+            value: {{ (print $.Values.app.secret) | sha256sum }}
+       {{- if .Values.clusterName }}
+          envFrom:
+          - configMapRef:
+              name: "app-{{ .Values.serviceName }}"
+          - secretRef:
+              name: "{{ .Values.clusterName }}-{{ $.Release.Namespace }}"
+       {{- else }}
+          envFrom:
+          - configMapRef:
+              name: app-{{ .Values.serviceName }}
+          - secretRef:
+              name: app-{{ .Values.serviceName }}
+       {{- end }}
+          ports:
+          {{- toYaml .Values.app.ports| nindent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.app.probes | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.app.probes | nindent 12 }}
+          startupProbe:
+            {{- toYaml .Values.app.probes | nindent 12 }}
+            failureThreshold: 20
+            periodSeconds: 5

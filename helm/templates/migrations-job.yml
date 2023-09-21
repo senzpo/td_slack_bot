@@ -1,0 +1,44 @@
+{{- if eq .Values.migrations.enabled true }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migrations-{{ .Values.serviceName }}-{{ .Release.Revision }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: migrations-job-{{ .Values.serviceName }}
+        logging: "true"
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: app-{{ .Values.serviceName }}-imagepull-credentials
+      containers:
+        - name: app-migration-{{ .Values.serviceName }}
+          resources:
+            requests:
+              memory: "512Mi"
+          image: "{{ .Values.app.imagePath }}:{{ .Values.serviceVersion }}"
+          env:
+          - name: CHECKSUM_CONFIG
+            value: {{ (print $.Values.app.config) | sha256sum }}
+          - name: CHECKSUM_SECRET
+            value: {{ (print $.Values.app.secret) | sha256sum }}
+       {{- if .Values.clusterName }}
+          envFrom:
+          - configMapRef:
+              name: "app-{{ .Values.serviceName }}"
+          - secretRef:
+              name: "{{ .Values.clusterName }}-{{ $.Release.Namespace }}"
+       {{- else }}
+          envFrom:
+          - configMapRef:
+              name: app-{{ .Values.serviceName }}
+          - secretRef:
+              name: app-{{ .Values.serviceName }}
+       {{- end }}
+          command:
+          - rails
+          - db:migrate
+{{ end }}

@@ -1,0 +1,32 @@
+---
+apiVersion: {{ template "ingress.apiVersion" $ }}
+kind: Ingress
+metadata:
+  name: ingress-{{ .Values.serviceName }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ .Values.ingress.letsencryptClusterIssuer }}"
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.class }}
+  rules:
+  {{- range $key, $val := .Values.ingress.hosts }}
+    - host: {{$val | quote}}
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: app-{{ $.Values.serviceName }}
+                port:
+                  number: 80
+  {{ end }}
+  tls:
+  {{- range $key, $val := .Values.ingress.hosts }}
+  - hosts:
+    - {{$val | quote}}
+    secretName: ssl-{{$val | replace "*" "wildcard"}}
+  {{ end }}

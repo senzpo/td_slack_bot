@@ -1,0 +1,18 @@
+---
+apiVersion: {{ template "service.apiVersion" $ }}
+kind: Service
+metadata:
+  name: app-{{ .Values.serviceName }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: app-{{ .Values.serviceName }}
+    chart: {{ $.Chart.Name }}-{{ $.Chart.Version }}
+    component: app-{{ .Values.serviceName }}
+    heritage: {{ $.Release.Service }}
+    release: {{ $.Release.Name }}
+spec:
+  selector:
+    app: app-{{ .Values.serviceName }}
+  type: {{ .Values.app.service.type }}
+  ports: 
+  {{- toYaml .Values.app.service.ports| nindent 8 }}

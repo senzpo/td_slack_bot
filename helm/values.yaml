@@ -1,0 +1,172 @@
+clusterName: eks-us-stage-1
+serviceName: td-slack-bot
+app:
+    imagePath: 338959976356.dkr.ecr.us-east-1.amazonaws.com/taxdome/service/td_slack_bot
+    deployment:
+        replicaCount: 3
+        podAnnotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "3000"
+        prometheus.io/scrape: "true"
+    service:
+        type: ClusterIP
+        ports:
+          - name: http
+            protocol: TCP
+            port: 80
+            targetPort: 3000
+          - name: stat
+            protocol: TCP
+            port: 9394
+            targetPort: 9394
+    resources:
+        requests:
+          cpu: 50m
+          memory: 256Mi
+        limits:
+          cpu: 1
+          memory: 1Gi
+    ports:
+      - containerPort: 3000
+        protocol: TCP
+      - containerPort: 9394
+        protocol: TCP
+    probes:
+        httpGet:
+            path: /
+            port: 3000
+            scheme: HTTP
+    config:
+        ANYCABLE_REDIS_URL: redis://redis:6379/0
+common:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: '0%'
+      maxSurge: '25%'
+
+migrations:
+  enabled: true
+
+ingress:
+  class: nginx-internal
+  letsencryptClusterIssuer: "letsencrypt-staging"
+  sslRedirect: "true"
+  proxyBodySize: 100m
+  proxyConnectTimeout: 60
+  proxySendTimeout: 60
+  proxyReadTimeout: 60
+  client_header_buffer_size: "64k"
+  httpAuth: false
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Forwarded-For $http_x_forwarded_for";
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+postgresql:
+  enabled: true
+#https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+  global:
+    postgresql:
+      auth:
+        username: "slackbot"
+        database: "slackbotdb"
+        existingSecret: "eks-us-stage-1-td-slack-bot"
+        secretKeys:
+          adminPasswordKey: "adminPassword"
+          userPasswordKey: "userPassword"
+          replicationPasswordKey: ""
+    persistence:
+      ## @param primary.persistence.enabled Enable PostgreSQL Primary data persistence using PVC
+      ##
+      enabled: true
+      ## @param primary.persistence.storageClass PVC Storage Class for PostgreSQL Primary data volume
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass: ""
+      ## @param primary.persistence.accessModes PVC Access Mode for PostgreSQL volume
+      ##
+      accessModes:
+        - ReadWriteOnce
+      ## @param primary.persistence.size PVC Storage Request for PostgreSQL volume
+      ##
+      size: 10Gi
+      ## PostgreSQL Primary Persistent Volume Claim Retention Policy
+      ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
+      ##
+      persistentVolumeClaimRetentionPolicy:
+        ## @param primary.persistentVolumeClaimRetentionPolicy.enabled Enable Persistent volume retention policy for Primary Statefulset
+        ##
+        enabled: true
+        ## @param primary.persistentVolumeClaimRetentionPolicy.whenScaled Volume retention behavior when the replica count of the StatefulSet is reduced
+        ##
+        whenScaled: Retain
+        ## @param primary.persistentVolumeClaimRetentionPolicy.whenDeleted Volume retention behavior that applies when the StatefulSet is deleted
+        ##
+        whenDeleted: Retain
+redis:
+  enabled: false
+#https://github.com/bitnami/charts/blob/main/bitnami/redis/values.yaml
+  global:
+    redis:
+      password: ""
+
+    auth:
+      ## @param auth.enabled Enable password authentication
+      ##
+      enabled: true
+      ## @param auth.sentinel Enable password authentication on sentinels too
+      ##
+      sentinel: true
+      ## @param auth.password Redis&reg; password
+      ## Defaults to a random 10-character alphanumeric string if not set
+      ##
+      password: ""
+      ## @param auth.existingSecret The name of an existing secret with Redis&reg; credentials
+      ## NOTE: When it's set, the previous `auth.password` parameter is ignored
+      ##
+      existingSecret: ""
+      ## @param auth.existingSecretPasswordKey Password key to be retrieved from existing secret
+      ## NOTE: ignored unless `auth.existingSecret` parameter is set
+      ##
+      existingSecretPasswordKey: ""
+  master:
+    ## @param master.count Number of Redis&reg; master instances to deploy (experimental, requires additional configuration)
+    ##
+    count: 1
+    ## @param master.configuration Configuration for Redis&reg; master nodes
+    ## ref: https://redis.io/topics/config
+    ##
+    configuration: ""
+    ## @param master.disableCommands Array with Redis&reg; commands to disable on master nodes
+    ## Commands will be completely disabled by renaming each to an empty string.
+    ## ref: https://redis.io/topics/security#disabling-of-specific-commands
+    ##
+    disableCommands:
+      - FLUSHDB
+      - FLUSHALL
+    persistence:
+      ## @param master.persistence.enabled Enable persistence on Redis&reg; master nodes using Persistent Volume Claims
+      ##
+      enabled: true
+      ## @param master.persistence.storageClass Persistent Volume storage class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner
+      ##
+      storageClass: ""
+      ## @param master.persistence.accessModes Persistent Volume access modes
+      ##
+      accessModes:
+        - ReadWriteOnce
+      ## @param master.persistence.size Persistent Volume size
+      ##
+      size: 8Gi

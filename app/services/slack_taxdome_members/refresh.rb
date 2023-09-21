@@ -10,7 +10,7 @@ module SlackTaxdomeMembers
           real_name: td_member[:profile][:real_name],
           role: td_member[:profile][:title],
           email: td_member[:profile][:email],
-          avatar_link: td_member[:profile][:image_original] || td_member[:profile][:image_192],
+          avatar_link: td_member[:profile][:image_original] || td_member[:profile][:image_192]
         }
 
         taxdome_member = Slack::TaxdomeMember.find_or_initialize_by(external_id: td_member[:id])

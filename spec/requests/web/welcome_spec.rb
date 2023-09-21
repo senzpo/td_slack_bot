@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Web::Welcomes', type: :request do
+RSpec.describe 'Web::Welcomes' do
   describe 'GET /index' do
     it 'respond with success' do
       get root_url
