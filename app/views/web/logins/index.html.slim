@@ -1,0 +1,7 @@
+section.py-5.text-center.container
+  .row.py-lg-5
+    .col-lg-6.col-md-8.mx-auto
+      h1.fw-light
+        | Welcome
+      p
+        = google_sign_in_button 'Sign in with my Google account', proceed_to: create_login_url, data: {turbo: false}, class: 'btn btn-primary'
