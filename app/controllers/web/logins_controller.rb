@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Web
   class LoginsController < ApplicationController
     skip_before_action :authenticate_user!
@@ -9,11 +11,12 @@ module Web
         session[:user_id] = user_id
         redirect_to root_path
       else
-        redirect_to logins_path, alert: 'authentication_failed'
+        redirect_to logins_path
       end
     end
 
     private
+
     def authenticate_with_google
       id_token = flash[:google_sign_in]['id_token']
       error = flash[:google_sign_in]['error']

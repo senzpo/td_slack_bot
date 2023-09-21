@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
-  config.google_sign_in.client_id     = ENV['GOOGLE_CLIENT_ID']
-  config.google_sign_in.client_secret = ENV['GOOGLE_CLIENT_SECRET']
+  config.google_sign_in.client_id     = ENV.fetch('GOOGLE_CLIENT_ID', nil)
+  config.google_sign_in.client_secret = ENV.fetch('GOOGLE_CLIENT_SECRET', nil)
 end
