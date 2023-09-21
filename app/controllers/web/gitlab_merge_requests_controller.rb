@@ -3,11 +3,11 @@
 module Web
   class GitlabMergeRequestsController < ApplicationController
     def index
-      @merge_requests = Gitlab::MergeRequest.ordered_by_newest
+      @merge_requests = Gitlab::MergeRequest.active.ordered_by_newest.preload(:taxdome_member)
     end
 
     def show
-      @merge_request_events = Gitlab::MergeRequestEvent.where(gitlab_merge_request_id: params[:id])
+      @merge_request = Gitlab::MergeRequest.find params[:id]
     end
   end
 end

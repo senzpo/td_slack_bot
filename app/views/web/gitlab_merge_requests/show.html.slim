@@ -1,12 +1,10 @@
-table
+table.table
   thead
     tr
-      th gitlab_merge_request_id
-      th status
-      th produced_at
+      th[scope="col"] Status
+      th[scope="col"] Produced at
   tbody
-    - @merge_request_events.each do |merge_request_event|
+    - @merge_request.merge_request_events.ordered_by_newest.each do |merge_request_event|
       tr
-        td = merge_request_event.gitlab_merge_request_id
         td = merge_request_event.status
-        td = merge_request_event.produced_at
+        td = I18n.l merge_request_event.produced_at, format: :long
