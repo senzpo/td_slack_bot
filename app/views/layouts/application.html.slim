@@ -24,11 +24,14 @@ html
                 = link_to_if request.path != bitbucket_pull_requests_path, 'Bitbucket', bitbucket_pull_requests_path, class: 'nav-link text-white' do
                   .nav-link.text-white.active
                     | Bitbucket
-
               li
                 = link_to_if request.path != taxdome_members_path, 'Taxdome Members', taxdome_members_path, class: 'nav-link text-white' do
                   .nav-link.text-white.active
                     | Taxdome Members
+              li
+                = link_to_if request.path != service_team_path, 'Service Team', service_team_path, class: 'nav-link text-white' do
+                  .nav-link.text-white.active
+                    | Service Team
             hr
 
         .col-md-9.col-lg-10

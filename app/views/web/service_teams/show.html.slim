@@ -1,0 +1,51 @@
+- if @stats[:overdue_urgent_topics].any?
+  .my-3.p-3.bg-body.rounded.shadow-sm
+    h2.border-bottom.pb-2.mb-0
+      | Overdue #urgent topics
+    - @stats[:overdue_urgent_topics].each do |topic|
+      .d-flex.text-body-secondary.pt-3
+        p
+          strong.d-block.text-gray-dark
+            span.badge.text-bg-danger
+              = I18n.l(Time.at(topic.thread_ts.to_f), format: :long)
+            = "#{topic.reply_users_count} replies"
+          = topic.text
+
+- if @stats[:overdue_investigation_topics].any?
+  .my-3.p-3.bg-body.rounded.shadow-sm
+    h2.border-bottom.pb-2.mb-0
+      | Overdue #investigation topics
+    - @stats[:overdue_investigation_topics].each do |topic|
+      .d-flex.text-body-secondary.pt-3
+        p
+          strong.d-block.text-gray-dark
+            span.badge.text-bg-danger
+              = I18n.l(Time.at(topic.thread_ts.to_f), format: :long)
+            = "#{topic.reply_users_count} replies"
+          = topic.text
+
+- if @stats[:overdue_security_topics].any?
+  .my-3.p-3.bg-body.rounded.shadow-sm
+    h2.border-bottom.pb-2.mb-0
+      | Overdue #security topics
+    - @stats[:overdue_security_topics].each do |topic|
+      .d-flex.text-body-secondary.pt-3
+        p
+          strong.d-block.text-gray-dark
+            span.badge.text-bg-danger
+              = I18n.l(Time.at(topic.thread_ts.to_f), format: :long)
+            = "#{topic.reply_users_count} replies"
+          = topic.text
+
+- if @stats[:overdue_production_errors].any?
+  .my-3.p-3.bg-body.rounded.shadow-sm
+    h2.border-bottom.pb-2.mb-0
+      | Overdue #production_errors topics
+    - @stats[:overdue_production_errors].each do |topic|
+      .d-flex.text-body-secondary.pt-3
+        p
+          strong.d-block.text-gray-dark
+            span.badge.text-bg-danger
+              = I18n.l(Time.at(topic.thread_ts.to_f), format: :long)
+            = "#{topic.reply_users_count} replies"
+          = topic.text

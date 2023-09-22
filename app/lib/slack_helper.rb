@@ -20,18 +20,18 @@ class SlackHelper
 
   class Message < SimpleDelegator
     def resolved?
-      has_reaction? && (DONE_REACTION && reactions.map(&:name)).any?
+      reaction? && (DONE_REACTION && reactions.map(&:name)).any?
     end
 
     def in_progress?
-      !resolved? && has_reaction? && (PROGRESS_REACTION && reactions.map(&:name)).any?
+      !resolved? && reaction? && (PROGRESS_REACTION && reactions.map(&:name)).any?
     end
 
     def opened?
       !resolved?
     end
 
-    def has_reaction?
+    def reaction?
       respond_to?(:reactions) && reactions.present?
     end
   end
@@ -72,6 +72,10 @@ class SlackHelper
 
   def security_reports_channel
     channel_by_name(CHANNELS[:security_reports])
+  end
+
+  def production_errors_channel
+    channel_by_name(CHANNELS[:production_errors])
   end
 
   private
