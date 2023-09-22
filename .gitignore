@@ -34,3 +34,5 @@
 
 .idea/
 envvars
+/tmp1
+helm/charts

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module BitbucketPullRequests
-  class TaxdomeMemberDoesNotExist < StandardError; end
-
   class Refresh
+    class TaxdomeMemberDoesNotExist < StandardError; end
+
     def self.perform
       errors = []
       BitbucketHelper.pull_requests.each do |pr|

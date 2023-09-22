@@ -14,6 +14,8 @@ RUN bundle install
 
 ADD . /app
 
+RUN SECRET_KEY_BASE='SECRET_KEY_BASE' bundle exec rake assets:precompile
+
 EXPOSE 3000
 
 CMD ["./bin/rails", "s", "-b", "0.0.0.0", "-p", "3000"]

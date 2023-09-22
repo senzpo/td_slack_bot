@@ -1,25 +1,21 @@
-form type="get" action="/api/taxdome_members/refresh"
-  button type="submit" Refresh
+table.table
+  caption List of Taxdome members
+  thead
+    tr
+      th[scope="col"] #
+      th
+      th Real name
+      th Email
+      th Role
+      th User deleted
 
-div
-  table[class="table table-hover"]
-    caption List of Taxdome members
-    thead[class="table-dark"]
-      tr
-        th[scope="col"] #
-        th 
-        th Real name
-        th Email
-        th Role
-        th User deleted
-
-    tbody
-    - @taxdome_members.each_with_index do |td_member, index|
-        tr
-          td[scope="row"] #{index + 1}
-          td 
-            img[src="#{td_member.avatar_link}" alt="td member avatar image" class="td-member-avatar"]
-          td = link_to td_member.real_name, edit_taxdome_member_url(td_member.id)
-          td #{td_member.email}
-          td #{td_member.role}
-          td #{td_member.is_deleted}
+  tbody
+  - @taxdome_members.each_with_index do |td_member, index|
+    tr
+      td #{index + 1}
+      td
+        img[src="#{td_member.avatar_link}" alt="td member avatar image" class="td-member-avatar"]
+      td = link_to td_member.real_name, edit_taxdome_member_url(td_member.id)
+      td #{td_member.email}
+      td #{td_member.role}
+      td #{td_member.is_deleted}

@@ -1,21 +1,19 @@
-form type="get" action="/api/gitlab_merge_requests/refresh"
-  button type="submit" Refresh
-  a.button-link href="/gitlab_merge_request_events" Events
-table
+table.table
   thead
     tr
-      th external_id
-      th title
-      th author
-      th state
-      th created_on
-      th updated_on
+      th[scope="col"] Title
+      th[scope="col" colspan="2"] Author
+      th[scope="col"] State
+      th[scope="col"] Updated on
   tbody
     - @merge_requests.each do |merge_request|
-      tr
-        td = merge_request.external_id
-        td = merge_request.title
-        td = merge_request.author
-        td = merge_request.state
-        td = merge_request.created_on
-        td = merge_request.updated_on
+      tr[class=gitlab_mr_table_highlight(merge_request)]
+        td = link_to merge_request.title,
+                gitlab_mr_url(merge_request.external_id),
+                target: '_blank',
+                class: 'link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'
+        td
+          img[src="#{merge_request.taxdome_member.avatar_link}" alt="td member avatar image" class="td-member-avatar"]
+        td = merge_request.taxdome_member.real_name
+        td = link_to merge_request.state, gitlab_merge_request_path(merge_request.id)
+        td = I18n.l merge_request.updated_on, format: :long

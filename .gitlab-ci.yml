@@ -36,7 +36,11 @@ get_ecr_creds:
 build:
   stage: build
   image: docker:24.0.1
-  <<: *docker_login
+  variables:
+    DOCKER_REPO: $DOCKER_REGISTRY_STAGE
+  before_script:
+    - until docker info; do sleep 1; done
+    - echo -n $DOCKER_CREDS | docker login $DOCKER_REPO --username AWS --password-stdin 
   script:
     - docker build -t $BUILD_TAG_ID .
     - docker push $BUILD_TAG_ID
@@ -54,8 +58,9 @@ deploy:
   stage: deploy
   image: $DOCKER_REGISTRY_STAGE/taxdome/service/infra/deploy_aws:v0.0.3
   script:
-    - echo "$PROD_ENV" | tr -d '\r'  > ./values.yml
-    - helm upgrade -n td-slack-bot -i td-slack-bot -f values.yml --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
+    - helm dependency update helm
+    - helm upgrade --install -n td-slack-bot td-slack-bot -f ${STAGE_ENV} --set serviceVersion=$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID helm
+  when: manual
   tags:
     - eks-us-stage-1
   only:
