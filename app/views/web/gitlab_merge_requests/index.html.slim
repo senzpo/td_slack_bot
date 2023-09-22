@@ -27,3 +27,5 @@ table.table
         td = merge_request.taxdome_member.real_name
         td = link_to merge_request.state, gitlab_merge_request_path(merge_request.id)
         td = I18n.l merge_request.updated_on, format: :long
+
+= paginate @merge_requests
