@@ -10,6 +10,10 @@ module ApplicationHelper
       'table-danger'
     elsif merge_request.draft?
       'table-secondary'
+    elsif merge_request.closed?
+      'table-dark'
+    elsif merge_request.merged?
+      'table-success'
     end
   end
 end

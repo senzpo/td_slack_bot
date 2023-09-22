@@ -13,13 +13,14 @@ module Slack
       def self.perform
         slack_helper = SlackHelper.new
         overdue_urgent_topics = overdue_topics(slack_helper.urgent_channel, SLA_LIMIT_DAYS_FOR[:urgent])
-        overdue_investigation_topics = overdue_topics(slack_helper.investigation_channel, SLA_LIMIT_DAYS_FOR[:investigation])
-        overdue_security_topics = overdue_topics(slack_helper.security_reports_channel, SLA_LIMIT_DAYS_FOR[:security_reports])
+        overdue_investigation_topics = overdue_topics(slack_helper.investigation_channel,
+                                                      SLA_LIMIT_DAYS_FOR[:investigation])
+        overdue_security_topics = overdue_topics(slack_helper.security_reports_channel,
+                                                 SLA_LIMIT_DAYS_FOR[:security_reports])
         overdue_production_errors = overdue_topics(slack_helper.urgent_channel, SLA_LIMIT_DAYS_FOR[:production_errors])
 
         # https://api.slack.com/methods/chat.getPermalink
         # collect links^^
-
       end
 
       private

@@ -3,7 +3,7 @@
 module Web
   class GitlabMergeRequestsController < ApplicationController
     def index
-      @merge_requests = Gitlab::MergeRequest.active.ordered_by_newest.preload(:taxdome_member)
+      @merge_requests = Gitlab::MergeRequest.ordered_by_newest.preload(:taxdome_member).ransack(params[:q]).result
     end
 
     def show
