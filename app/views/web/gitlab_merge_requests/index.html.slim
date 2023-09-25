@@ -1,3 +1,13 @@
+ul.nav.nav-tabs
+  li.nav-item
+    = link_to_unless_current 'Active', gitlab_merge_requests_path(q: {state_not_in: %w[merged closed]}), class: 'nav-link' do
+      .nav-link.active
+        | Active
+  li.nav-item
+    = link_to_unless_current 'Closed', gitlab_merge_requests_path(q: {state_in: %w[merged closed]}), class: 'nav-link' do
+      .nav-link.active
+        | Closed
+
 table.table
   thead
     tr
@@ -17,3 +27,5 @@ table.table
         td = merge_request.taxdome_member.real_name
         td = link_to merge_request.state, gitlab_merge_request_path(merge_request.id)
         td = I18n.l merge_request.updated_on, format: :long
+
+= paginate @merge_requests

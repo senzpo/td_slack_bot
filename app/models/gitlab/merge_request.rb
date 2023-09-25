@@ -19,14 +19,23 @@ module Gitlab
     scope :ordered_by_newest, -> { order(updated_on: :desc) }
     belongs_to :taxdome_member, class_name: 'Slack::TaxdomeMember', foreign_key: 'slack_taxdome_member_id'
 
-    scope :active, -> { where.not(state: %w[merged closed]) }
+    # scope :active, -> { where.not(state: %w[merged closed]) }
+    # scope :closed, -> { where(state: %w[merged closed]) }
+
+    def merged?
+      state == 'merged'
+    end
+
+    def closed?
+      state == 'closed'
+    end
 
     def draft?
-      DRAFT_WORDS.any? { |word| title.downcase.include?(word) }
+      !merged? && !closed? && DRAFT_WORDS.any? { |word| title.downcase.include?(word) }
     end
 
     def outdated?
-      !draft? && updated_on < 3.days.ago
+      !merged? && !closed? && !draft? && updated_on < 3.days.ago
     end
   end
 end

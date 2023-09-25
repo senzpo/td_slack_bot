@@ -16,12 +16,22 @@ html
               span.fs-4 TD
             hr
             ul.nav.nav-pills.flex-column.mb-auto
-              li.nav-item
-                a[class="nav-link text-white #{'active' if request.original_fullpath == gitlab_merge_requests_path}", href="#{gitlab_merge_requests_path}"] Gitlab
               li
-                a[class="nav-link text-white #{'active' if request.original_fullpath == bitbucket_pull_requests_path}", href="#{bitbucket_pull_requests_path}"] Bitbucket
+                = link_to_if request.path != gitlab_merge_requests_path, 'Technical design', gitlab_merge_requests_path(q: {state_not_in: %w[merged closed]}), class: 'nav-link text-white' do
+                  .nav-link.text-white.active
+                    | Technical design
               li
-                a[class="nav-link text-white #{'active' if request.original_fullpath == taxdome_members_path}", href="#{taxdome_members_path}"] Taxdome Members
+                = link_to_if request.path != bitbucket_pull_requests_path, 'Bitbucket', bitbucket_pull_requests_path, class: 'nav-link text-white' do
+                  .nav-link.text-white.active
+                    | Bitbucket
+              li
+                = link_to_if request.path != taxdome_members_path, 'Taxdome Members', taxdome_members_path, class: 'nav-link text-white' do
+                  .nav-link.text-white.active
+                    | Taxdome Members
+              li
+                = link_to_if request.path != service_team_path, 'Service Team', service_team_path, class: 'nav-link text-white' do
+                  .nav-link.text-white.active
+                    | Service Team
             hr
 
         .col-md-9.col-lg-10
