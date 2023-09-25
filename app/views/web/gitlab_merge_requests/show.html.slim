@@ -3,8 +3,10 @@ table.table
     tr
       th[scope="col"] Status
       th[scope="col"] Produced at
+      th[scope="col"] Draft
   tbody
     - @merge_request.merge_request_events.ordered_by_newest.each do |merge_request_event|
       tr
         td = merge_request_event.status
         td = I18n.l merge_request_event.produced_at, format: :long
+        td = merge_request_event.draft

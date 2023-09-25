@@ -28,15 +28,21 @@ module GitlabMergeRequests
 
         merge_request = Gitlab::MergeRequest.find_or_initialize_by(external_id: rmr['iid'])
         is_new_record = merge_request.new_record?
+        was_draft = is_new_record ? nil : merge_request.draft?
         state_before_update = merge_request.state
 
         Gitlab::MergeRequest.transaction do
           merge_request.update!(params)
+          was_draft = merge_request.draft? if was_draft.nil?
 
           if is_new_record
-            merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:created_on])
-          elsif state_before_update != params[:state]
-            merge_request.merge_request_events.create!(status: params[:state], produced_at: params[:updated_on])
+            merge_request.merge_request_events.create!(status: params[:state],
+                                                       produced_at: params[:created_on],
+                                                       draft: merge_request.draft?)
+          elsif state_before_update != params[:state] || merge_request.draft? != was_draft
+            merge_request.merge_request_events.create!(status: params[:state],
+                                                       produced_at: params[:updated_on],
+                                                       draft: merge_request.draft?)
           end
         end
 

@@ -19,9 +19,6 @@ module Gitlab
     scope :ordered_by_newest, -> { order(updated_on: :desc) }
     belongs_to :taxdome_member, class_name: 'Slack::TaxdomeMember', foreign_key: 'slack_taxdome_member_id'
 
-    # scope :active, -> { where.not(state: %w[merged closed]) }
-    # scope :closed, -> { where(state: %w[merged closed]) }
-
     def merged?
       state == 'merged'
     end
