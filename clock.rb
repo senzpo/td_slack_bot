@@ -11,7 +11,7 @@ module Clockwork
   end
 
   every(1.hour, 'Refresh TD members') do
-    SlackTaxdomeMembers::Refresh.perform
+    Slack::TaxdomeMembers::Refresh.perform
   end
 
   every(1.hour, 'Refresh GitlabMergeRequests') do

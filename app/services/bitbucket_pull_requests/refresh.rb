@@ -6,7 +6,9 @@ module BitbucketPullRequests
 
     def self.perform
       errors = []
-      BitbucketHelper.pull_requests.each do |pr|
+
+      one_week_ago_date = 1.week.ago.strftime('%Y-%m-%d')
+      BitbucketHelper.pull_requests(one_week_ago_date).each do |pr|
         params = pr.attributes.slice(:title, :state, :created_on, :updated_on)
         params[:external_id] = pr.id
         params[:display_name] = pr.author['display_name']
