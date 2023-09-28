@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/app/sidekiq'
+
   scope module: :web do
     root 'welcome#index'
     resources :gitlab_merge_requests, only: %i[index show]

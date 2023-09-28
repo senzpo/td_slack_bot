@@ -11,21 +11,14 @@ module Clockwork
   end
 
   every(1.hour, 'Refresh TD members') do
-    Slack::TaxdomeMembers::Refresh.perform
+    SlackMembersRefreshJob.perform_async
   end
 
   every(1.hour, 'Refresh GitlabMergeRequests') do
-    raw_merge_requests = GitlabHelper.get_merge_requests
-    GitlabMergeRequests::Refresh.perform(raw_merge_requests)
-  rescue GitlabMergeRequests::Refresh::TaxdomeMemberDoesNotExist => e
-    # TODO: send some message
-    puts e
+    GitlabRefreshJob.perform_async
   end
 
   every(1.hour, 'Refresh BitbucketPullRequests') do
-    BitbucketPullRequests::Refresh.perform
-  rescue BitbucketPullRequests::Refresh::TaxdomeMemberDoesNotExist => e
-    # TODO: send some message
-    puts e
+    BitbucketRefreshJob.perform_async
   end
 end
