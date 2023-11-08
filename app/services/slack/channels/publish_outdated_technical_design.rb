@@ -11,12 +11,10 @@ module Slack
           return if requests.blank?
 
           slack_helper = SlackHelper.new
-          # channel = slack_helper.devsonly_channel
-          channel = slack_helper.test_channel
+          channel = slack_helper.devsonly_channel
 
           authors_with_requests = requests.reduce('') do |memo, request|
-            # TODO: fix me <@ # -> <@#
-            memo += "\n   • <@ #{request.taxdome_member.external_id}>  <#{gitlab_mr_url(request.external_id)}|#{request.title}>"
+            memo += "\n   • <@#{request.taxdome_member.external_id}>  <#{gitlab_mr_url(request.external_id)}|#{request.title}>"
             memo
           end
 

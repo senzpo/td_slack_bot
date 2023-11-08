@@ -11,9 +11,7 @@ module Slack
           return if stats.values.all?(&:blank?)
 
           slack_helper = SlackHelper.new
-          # channel = slack_helper.service_team_channel
-          # investigation_channel
-          channel = slack_helper.test_channel
+          channel = slack_helper.service_team_channel
 
           topic = [
             {
