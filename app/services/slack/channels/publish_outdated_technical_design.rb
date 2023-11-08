@@ -7,13 +7,16 @@ module Slack
         include ApplicationHelper
 
         def perform
-          slack_helper = SlackHelper.new
-          channel = slack_helper.test_channel
           requests = Gitlab::MergeRequest.opened.ordered_by_oldest.filter { |r| !r.draft? }
           return if requests.blank?
 
+          slack_helper = SlackHelper.new
+          # channel = slack_helper.devsonly_channel
+          channel = slack_helper.test_channel
+
           authors_with_requests = requests.reduce('') do |memo, request|
-            memo += "\n   • <@#{request.taxdome_member.external_id}>  <#{gitlab_mr_url(request.external_id)}|#{request.title}>"
+            # TODO: fix me <@ # -> <@#
+            memo += "\n   • <@ #{request.taxdome_member.external_id}>  <#{gitlab_mr_url(request.external_id)}|#{request.title}>"
             memo
           end
 

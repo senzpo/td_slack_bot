@@ -65,6 +65,10 @@ class SlackHelper
     end
   end
 
+  def link_to_message(channel, message_ts)
+    slack_client.chat_getPermalink(channel: channel.id, message_ts:)['permalink']
+  end
+
   def channel_by_name(name)
     all_channels.find { |c| c.name == name }
   end

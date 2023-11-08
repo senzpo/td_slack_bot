@@ -36,4 +36,8 @@ module Clockwork
   every(1.week, 'Publish outdated Technical design', at: 'Monday 07:00') do
     Slack::Channels::PublishOutdatedTechnicalDesign.perform
   end
+
+  # every(1.week, 'Publish outdated Technical design', at: 'Monday 07:00') do
+  #   Slack::Channels::PublishServiceTeamHealth.perform
+  # end
 end
