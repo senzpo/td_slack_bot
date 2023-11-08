@@ -17,6 +17,8 @@ module Gitlab
                                     foreign_key: 'gitlab_merge_request_id'
 
     scope :ordered_by_newest, -> { order(updated_on: :desc) }
+    scope :ordered_by_oldest, -> { order(updated_on: :asc) }
+    scope :opened, -> { where.not(state: %w[merged closed]) }
     belongs_to :taxdome_member, class_name: 'Slack::TaxdomeMember', foreign_key: 'slack_taxdome_member_id'
 
     def merged?

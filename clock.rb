@@ -6,6 +6,10 @@ require_relative 'config/boot'
 require_relative 'config/environment'
 
 module Clockwork
+  configure do |config|
+    config[:tz] = 'UTC'
+  end
+
   handler do |job|
     puts "Running #{job}"
   end
@@ -27,5 +31,9 @@ module Clockwork
   rescue BitbucketPullRequests::Refresh::TaxdomeMemberDoesNotExist => e
     # TODO: send some message
     puts e
+  end
+
+  every(1.week, 'Publish outdated Technical design', at: 'Monday 07:00') do
+    Slack::Channels::PublishOutdatedTechnicalDesign.perform
   end
 end
