@@ -33,7 +33,7 @@ module Clockwork
     puts e
   end
 
-  every(1.week, 'Publish outdated Technical design', at: 'Monday 07:00') do
+  every(1.week, 'Publish outdated Technical design', at: 'tuesday 07:00') do
     Slack::Channels::PublishOutdatedTechnicalDesign.perform
   end
 
