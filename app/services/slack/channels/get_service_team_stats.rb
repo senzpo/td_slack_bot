@@ -18,14 +18,11 @@ module Slack
                                                         SLA_LIMIT_DAYS_FOR[:investigation])
           overdue_security_topics = overdue_topics(slack_helper.security_reports_channel,
                                                    SLA_LIMIT_DAYS_FOR[:security_reports])
-          overdue_production_errors = overdue_topics(slack_helper.production_errors_channel,
-                                                     SLA_LIMIT_DAYS_FOR[:production_errors])
 
           {
             overdue_urgent_topics:,
             overdue_investigation_topics:,
-            overdue_security_topics:,
-            overdue_production_errors:
+            overdue_security_topics:
           }
         end
 

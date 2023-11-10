@@ -12,6 +12,7 @@ class SlackHelper
     urgent: 'urgent',
     security_reports: 'security_reports',
     production_errors: 'production_errors',
+    devsonly: 'devsonly',
     test: 'fyi_bot_hackathon'
   }.freeze
 
@@ -54,6 +55,20 @@ class SlackHelper
       .map { |m| Message.new(m) }
   end
 
+  def post_message(channel, blocks: nil, text: nil)
+    if blocks.present?
+      slack_client.chat_postMessage(channel:, blocks: blocks.to_json)
+    elsif text.present?
+      slack_client.chat_postMessage(channel:, text:)
+    else
+      raise 'Has nothing to post.'
+    end
+  end
+
+  def link_to_message(channel, message_ts)
+    slack_client.chat_getPermalink(channel: channel.id, message_ts:)['permalink']
+  end
+
   def channel_by_name(name)
     all_channels.find { |c| c.name == name }
   end
@@ -76,6 +91,14 @@ class SlackHelper
 
   def production_errors_channel
     channel_by_name(CHANNELS[:production_errors])
+  end
+
+  def devsonly_channel
+    channel_by_name(CHANNELS[:devsonly])
+  end
+
+  def test_channel
+    channel_by_name(CHANNELS[:test])
   end
 
   private
