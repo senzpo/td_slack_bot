@@ -50,3 +50,7 @@ end
 group :development do
   gem 'web-console'
 end
+
+group :test do
+  gem 'clockwork-test'
+end
