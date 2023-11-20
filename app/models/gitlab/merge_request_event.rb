@@ -9,5 +9,9 @@ module Gitlab
     belongs_to :merge_request, class_name: 'Gitlab::MergeRequest', foreign_key: 'gitlab_merge_request_id'
 
     scope :ordered_by_newest, -> { order(produced_at: :desc) }
+    scope :merged, -> { where(status: :merged) }
+    scope :opened, -> { where(status: :opened) }
+    scope :closed, -> { where(status: :closed) }
   end
 end
+Tinybucket
